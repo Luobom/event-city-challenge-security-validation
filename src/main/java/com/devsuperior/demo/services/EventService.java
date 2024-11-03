@@ -38,7 +38,7 @@ public class EventService {
     public EventDTO insert(EventDTO dto) {
         Event entity = new Event();
         BeanUtils.copyProperties(dto, entity);
-        entity.getCity().setId(dto.cityId());
+        entity.setCity(new City(dto.cityId(), null));
         return new EventDTO(repository.save(entity));
     }
 
