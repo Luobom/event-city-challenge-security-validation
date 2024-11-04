@@ -9,6 +9,8 @@ import com.devsuperior.demo.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.FatalBeanException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,11 @@ public class EventService {
 
     public EventService(EventRepository repository) {
         this.repository = repository;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<EventDTO> findAll(Pageable pageable) {
+        return repository.findAll(pageable).map(EventDTO::new);
     }
 
     @Transactional
